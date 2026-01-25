@@ -40,7 +40,7 @@ export const TaskDetailPage = () => {
       if (!taskId) return;
       try {
         setAttemptsLoading(true);
-        const taskAttempts = await taskService.getTaskAttempts(taskId);
+        const taskAttempts = await taskService.getTaskAttempts(taskId, student?.id);
         setAttempts(taskAttempts);
       } catch (error) {
         console.error('Error cargando intentos:', error);
