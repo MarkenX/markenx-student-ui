@@ -22,15 +22,15 @@ export const GamePage = () => {
   // Cargar datos de la tarea para obtener scenarioId
   useEffect(() => {
     const run = async () => {
-      if (!taskId) {
-        setError('No se proporciono ID de tarea');
+      if (!taskId || !student?.id) {
+        setError('No se proporciono ID de tarea o estudiante');
         setLoading(false);
         return;
       }
 
       try {
         setLoading(true);
-        const task = await studentService.getStudentTask(taskId);
+        const task = await studentService.getStudentTask(student.id, taskId);
         setTask(task);
       } catch (err) {
         console.error('Error cargando tarea:', err);
@@ -41,7 +41,7 @@ export const GamePage = () => {
     };
 
     void run();
-  }, [taskId]);
+  }, [taskId, student?.id]);
 
   // Obtener token de autenticación para Unity
   useEffect(() => {
@@ -67,14 +67,13 @@ export const GamePage = () => {
 
   // Construir URL del juego con Query Parameters
   const gameUrl = useMemo(() => {
-    // Requiere: taskId, userId, y gameToken
-    if (!taskId || !student?.id || !gameToken) return null;
+    // Requiere: taskId, userId, gameToken, y scenarioId válido
+    if (!taskId || !student?.id || !gameToken || !task?.scenarioId) return null;
 
     const params = new URLSearchParams();
 
-    // scenarioId: usar el de la tarea, o taskId como fallback
-    const scenarioId = task?.scenarioId || taskId;
-    params.set('scenarioId', scenarioId);
+    // scenarioId: debe venir de la tarea
+    params.set('scenarioId', task.scenarioId);
 
     // studentId: del contexto de sesión
     params.set('studentId', student.id);
@@ -156,6 +155,25 @@ export const GamePage = () => {
             Volver a tareas
           </button>
         </div>
+      </div>
+    );
+  }
+
+  // Validar que la tarea tenga scenarioId
+  if (!loading && task && !task.scenarioId) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-8rem)] text-gray-500">
+        <ShieldAlert size={48} className="text-red-500 mb-4" />
+        <h2 className="text-xl font-bold text-red-600">Configuración incompleta</h2>
+        <p className="text-sm text-gray-500 mt-2 max-w-md text-center">
+          Esta tarea no tiene un escenario asignado. Contacta al administrador.
+        </p>
+        <button
+          onClick={() => navigate('/tasks')}
+          className="mt-4 text-brand-primary underline"
+        >
+          Volver a tareas
+        </button>
       </div>
     );
   }
