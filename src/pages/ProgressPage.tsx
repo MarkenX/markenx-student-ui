@@ -211,8 +211,8 @@ export const ProgressPage = () => {
               <tbody className="divide-y divide-gray-100">
                 {filteredAttempts.map((attempt) => (
                   <tr 
-                    key={attempt.id} 
-                    onClick={() => navigate(`/metrics/${attempt.id}`, { state: { fromTaskDetail: false } })}
+                    key={attempt.attemptId}
+                    onClick={() => navigate(`/metrics/${attempt.attemptId}`, { state: { fromTaskDetail: false } })}
                     className="hover:bg-gray-50 transition-colors cursor-pointer group"
                   >
                     <td className="px-6 py-4 font-medium text-slate-900 group-hover:text-brand-primary transition-colors">

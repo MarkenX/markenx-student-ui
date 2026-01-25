@@ -227,9 +227,9 @@ export const TaskDetailPage = () => {
               <tbody className="divide-y divide-gray-100">
                 {attempts.map((attempt) => (
                   <tr 
-                    key={attempt.id} 
+                    key={attempt.attemptId}
                     className="hover:bg-gray-50 transition-colors cursor-pointer group"
-                    onClick={() => navigate(`/metrics/${attempt.id}`, { 
+                    onClick={() => navigate(`/metrics/${attempt.attemptId}`, {
                       state: { fromTaskDetail: true, taskPath: `/tasks/${taskId}` } 
                     })}
                   >

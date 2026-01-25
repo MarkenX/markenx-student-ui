@@ -1,5 +1,5 @@
 interface AttemptServiceDTO {
-    id: string;
+    attemptId: string;
     taskId: string;
     startedAt: string;
     finishedAt: string;
