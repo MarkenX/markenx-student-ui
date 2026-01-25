@@ -1,6 +1,6 @@
 interface MetricServiceDTO {
-    id: string,
     attemptId: string,
+    taskId: string,
     profileDiscoveryPercentage: number;
     finalAcceptance: number;
     remainingBudget: number;

@@ -78,7 +78,7 @@ export const MetricsPage = () => {
           Tu Desempeño
         </h1>
         <p className="text-gray-500">
-          Fecha: {format(new Date(metrics.sessionDate), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}
+          Fecha: {metrics.sessionDate && format(new Date(metrics.sessionDate), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}
         </p>
       </div>
 
